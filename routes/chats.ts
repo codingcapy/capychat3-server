@@ -7,6 +7,6 @@ const chats = express.Router()
 import { createChat, getChat, updateChat } from "../controller"
 
 chats.route('/').post(createChat)
-chats.route('/:userId').get(getChat).post(updateChat)
+chats.route('/:chatId').get(getChat).post(updateChat)
 
 export default chats 

@@ -110,9 +110,10 @@ export async function createChat(req: Request, res: Response) {
     res.status(200).json({ success: true, message: "Chat added successfully!" })
 }
 
-export function getChat() {
-
-
+export async function getChat(req: Request, res: Response) {
+    const chatId = req.params.chatId;
+    const chat = await Chat.findOne({ chatId: parseInt(chatId) })
+    res.json(chat)
 }
 
 export function updateChat() {
@@ -129,8 +130,8 @@ export async function createMessage(req: Request, res: Response) {
     await Message.create({ content: inputContent, username: user, messageId })
     const message = await Message.findOne({ messageId: messageId })
     const chat = await Chat.findOne({ chatId: parseInt(chatId) })
-    try { 
-        await Chat.updateOne({ chatId: parseInt(chatId) }, { $push: { messages: message } }) 
+    try {
+        await Chat.updateOne({ chatId: parseInt(chatId) }, { $push: { messages: message } })
         res.status(200).json({ success: true, message: "Message added successfully!" })
     }
     catch (err) {
