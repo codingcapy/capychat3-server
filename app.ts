@@ -7,6 +7,7 @@ import connectDB from "./connect"
 import user from "./routes/user"
 import friends from "./routes/friends"
 import chats from "./routes/chats"
+import messages from "./routes/messages"
 
 dotenv.config()
 const app = express()
@@ -19,6 +20,7 @@ app.use("/api/users", users)
 app.use("/api/user", user)
 app.use("/api/user/friends", friends)
 app.use("/api/chats", chats)
+app.use("/api/messages", messages)
 
 async function start() {
     try {
