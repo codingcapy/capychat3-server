@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
 import User from "./models/User";
+import Chat from "./models/Chat";
 
 const saltRounds = 6;
 
@@ -57,7 +58,6 @@ export async function createUser(req: Request, res: Response) {
         res.json({ success: false, message: "Username already exists" })
     }
     else {
-        console.log(users.find((user: any) => user.username === username.toString()))
         const encrypted = await bcrypt.hash(password, saltRounds)
         const user = await User.create({ username: username, password: encrypted, userId: userId })
         res.status(200).json({ success: true, message: "Sign up successful!" })
@@ -72,7 +72,7 @@ export async function addFriend(req: Request, res: Response) {
     if (!friend) {
         return res.json({ success: false, message: "User does not exist" })
     }
-    if (friend.username in user.friends) {
+    if (user.friends.includes(friend.username)) {
         return res.json({ success: false, message: "User is already your friend!" })
     }
     if (inputUser == inputFriend) {
@@ -80,16 +80,40 @@ export async function addFriend(req: Request, res: Response) {
     }
     await User.updateOne({ username: inputUser }, { $push: { friends: friend.username } })
     await User.updateOne({ username: inputFriend }, { $push: { friends: user.username } })
-
     res.status(200).json({ success: true, message: "Friend added successfully!" })
 }
 
-export function getUser() {
+export async function getUser(req: Request, res: Response) {
+    const userId = req.params.userId;
+    const user = await User.findOne({ userId: parseInt(userId) })
+    res.json(user)
+}
+
+export function updateUser() {
 
 
 }
 
-export function updateUser() {
+export async function createChat(req: Request, res: Response){
+    const chats = await Chat.find({})
+    const chatId = chats.length === 0 ? 1 : chats[chats.length - 1].chatId + 1
+    const title = req.body.title 
+    const user = req.body.user
+    const friend = req.body.friend
+    await Chat.create({title, chatId})
+    await Chat.updateOne({chatId:chatId}, { $push: { users: user } })
+    await Chat.updateOne({chatId:chatId}, { $push: { users: friend } })
+    const chat = await Chat.findOne({chatId:chatId})
+    await User.updateOne({ username: user }, { $push: { chats: chat } })
+    await User.updateOne({ username: friend }, { $push: { chats: chat } })
+}
+
+export function getChat() {
+
+
+}
+
+export function updateChat() {
 
 
 }
