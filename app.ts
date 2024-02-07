@@ -23,6 +23,14 @@ const io = new SocketServer(server, {
     origin: "http://localhost:5173",
   },
 });
+io.on("connection", (socket) => {
+  socket.on("message", (body) => {
+    socket.broadcast.emit("message", {
+      body,
+      from: socket.id.slice(6),
+    });
+  });
+});
 app.get("/", (req, res) => res.send("welcome"));
 app.use("/api/users", users);
 app.use("/api/user", user);
