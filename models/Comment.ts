@@ -1,9 +1,9 @@
 
 /*
-Author: Paul Kim
-Date: January 9, 2024
-Version: 1.0
-Description: plan model schema for capy finance web server
+author: Paul Kim
+date: February 8, 2024
+version: 1.0
+description: comment model schema for CapyTalk API server
  */
 
 import mongoose from "mongoose";
@@ -13,7 +13,7 @@ const CommentSchema = new mongoose.Schema({
     content: { type: String, maxlength: [40000, 'content char limit is 10000'] },
     createDate: { type: Date, required: true, default: Date.now },
     commentId: { type: Number, required: [true, 'messageId is required'] }
-})
+});
 
-const Comment = mongoose.models.Comment || mongoose.model('Comment', CommentSchema)
-export default Comment
+const Comment = mongoose.models.Comment || mongoose.model('Comment', CommentSchema);
+export default Comment;

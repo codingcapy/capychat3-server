@@ -1,5 +1,10 @@
 
-
+/*
+author: Paul Kim
+date: February 8, 2024
+version: 1.0
+description: user model schema for CapyTalk API server
+ */
 
 import mongoose from "mongoose";
 import { ChatSchema } from "./Chat";
@@ -13,7 +18,7 @@ const UserSchema = new mongoose.Schema({
     friends: [String],
     chats: [ChatSchema],
     blocked: [String]
-})
+});
 
-const User = mongoose.models.User || mongoose.model('User', UserSchema)
-export default User
+const User = mongoose.models.User || mongoose.model('User', UserSchema);
+export default User;

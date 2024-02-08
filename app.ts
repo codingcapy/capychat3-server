@@ -1,4 +1,11 @@
 
+/*
+author: Paul Kim
+date: February 8, 2024
+version: 1.0
+description: app for CapyTalk API server
+ */
+
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
@@ -12,7 +19,7 @@ import chats from "./routes/chats";
 import messages from "./routes/messages";
 import comments from "./routes/comments";
 
-dotenv.config()
+dotenv.config();
 const app = express();
 const port = 3333;
 

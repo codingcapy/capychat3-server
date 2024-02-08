@@ -1,12 +1,17 @@
 
+/*
+author: Paul Kim
+date: February 8, 2024
+version: 1.0
+description: messages route for CapyTalk API server
+ */
 
+import express from "express";
+import { createMessage, getMessage, updateMessage } from "../controller";
 
-import express from "express"
-const messages = express.Router()
+const messages = express.Router();
 
-import { createMessage, getMessage, updateMessage } from "../controller"
+messages.route('/').post(createMessage);
+messages.route('/:userId').get(getMessage).post(updateMessage);
 
-messages.route('/').post(createMessage)
-messages.route('/:userId').get(getMessage).post(updateMessage)
-
-export default messages 
+export default messages;

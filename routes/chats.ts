@@ -1,12 +1,17 @@
 
+/*
+author: Paul Kim
+date: February 8, 2024
+version: 1.0
+description: chats route for CapyTalk API server
+ */
 
+import express from "express";
+import { createChat, getChat, updateChat } from "../controller";
 
-import express from "express"
-const chats = express.Router()
+const chats = express.Router();
 
-import { createChat, getChat, updateChat } from "../controller"
+chats.route('/').post(createChat);
+chats.route('/:chatId').get(getChat).post(updateChat);
 
-chats.route('/').post(createChat)
-chats.route('/:chatId').get(getChat).post(updateChat)
-
-export default chats 
+export default chats;
