@@ -39,14 +39,14 @@ app.use("/api/chats", chats);
 app.use("/api/messages", messages);
 
 async function start() {
-    try {
-        await connectDB(process.env.MONGO_URI);
-        console.log("Connected to database.");
-        server.listen(port, () => console.log(`Server listening on port: ${port}`));
-    }
-    catch (err) {
-        console.log(err);
-    }
+  try {
+    await connectDB(process.env.MONGO_URI);
+    console.log("Connected to database.");
+    server.listen(port, () => console.log(`Server listening on port: ${port}`));
+  }
+  catch (err) {
+    console.log(err);
+  }
 }
 
 start();
