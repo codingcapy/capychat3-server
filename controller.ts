@@ -5,6 +5,7 @@ import bcrypt from "bcrypt";
 import User from "./models/User";
 import Chat from "./models/Chat";
 import Message from "./models/Message";
+import Comment from "./models/Comment";
 
 const saltRounds = 6;
 
@@ -147,4 +148,13 @@ export function getMessage() {
 export function updateMessage() {
 
 
+}
+
+export async function createComment(req: Request, res: Response) {
+    const comments = await Comment.find({})
+    const commentId = comments.length === 0 ? 1 : comments[comments.length - 1].commentId + 1;
+    const email = req.body.email
+    const content = req.body.content
+    const comment = await Comment.create({ email, content, commentId })
+    res.status(200).json({ success: true })
 }

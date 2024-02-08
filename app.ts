@@ -10,6 +10,7 @@ import user from "./routes/user";
 import friends from "./routes/friends";
 import chats from "./routes/chats";
 import messages from "./routes/messages";
+import comments from "./routes/comments";
 
 dotenv.config()
 const app = express();
@@ -49,6 +50,7 @@ app.use("/api/user", user);
 app.use("/api/user/friends", friends);
 app.use("/api/chats", chats);
 app.use("/api/messages", messages);
+app.use("/api/comments", comments);
 
 async function start() {
   try {
