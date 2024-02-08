@@ -30,6 +30,18 @@ io.on("connection", (socket) => {
       from: socket.id.slice(6),
     });
   });
+  socket.on("friend", (body) => {
+    socket.broadcast.emit("friend", {
+      body,
+      from: socket.id.slice(6),
+    });
+  });
+  socket.on("chat", (body) => {
+    socket.broadcast.emit("chat", {
+      body,
+      from: socket.id.slice(6),
+    });
+  });
 });
 app.get("/", (req, res) => res.send("welcome"));
 app.use("/api/users", users);
