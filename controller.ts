@@ -73,6 +73,19 @@ export async function createUser(req: Request, res: Response) {
     }
 }
 
+export async function updateUser(req: Request, res: Response) {
+    const userId = parseInt(req.params.userId)
+    const incomingUser = await req.body;
+    const incomingPassword = incomingUser.password
+    const encrypted = await bcrypt.hash(incomingPassword, saltRounds)
+    const updatedUser = await User.findOneAndUpdate(
+        { userId: userId },
+        { username: incomingUser.username, password: encrypted, userId: incomingUser.userId },
+        { new: true }
+    );
+    res.status(200).json({ success: true });
+}
+
 export async function addFriend(req: Request, res: Response) {
     const inputUser = req.body.username;
     const user = await User.findOne({ username: inputUser });
@@ -96,11 +109,6 @@ export async function getUser(req: Request, res: Response) {
     const userId = req.params.userId;
     const user = await User.findOne({ userId: parseInt(userId) });
     res.json(user);
-}
-
-export function updateUser() {
-
-
 }
 
 export async function createChat(req: Request, res: Response) {
